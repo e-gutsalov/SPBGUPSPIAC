@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Car{% endblock %}
+
+{% block body %}
+    <h1>Cars</h1>
+
+    {% if cars %}
+
+    <a href="{{ path('app_car_new') }}">Create new</a>
+
+        <div>
+            {{ knp_pagination_filter(cars, {
+                'c.id': 'Id',
+                'c.name': 'Name',
+                'c.description': 'Description'
+            }) }}
+        </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(cars, 'Id', 'c.id') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Name', 'c.name') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Description', 'c.description') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Horses', 'c.horses') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'LVt', 'c.lVt') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'DateProduction', 'c.dateProduction') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'DateTimeProduction', 'c.dateTimeProduction') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Image', 'c.image') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Documentation', 'c.documentation') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Simple', 'c.simple') }}</th>
+                <th>{{ knp_pagination_sortable(cars, 'Tree', 'c.tree') }}</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for car in cars %}
+            <tr>
+                <td>{{ car.id }}</td>
+                <td>{{ car.name }}</td>
+                <td>{{ car.description }}</td>
+                <td>{{ car.horses }}</td>
+                <td>{{ car.lVt }}</td>
+                <td>{{ car.dateProduction ? car.dateProduction|date('d-m-Y') : '' }}</td>
+                <td>{{ car.dateTimeProduction ? car.dateTimeProduction|date('d-m-Y H:i:s') : '' }}</td>
+                <td>{{ car.image }}</td>
+                <td>{{ car.documentation }}</td>
+                <td>{{ car.simple }}</td>
+                <td>{{ car.tree }}</td>
+                <td>
+                    <a href="{{ path('app_car_show', {'id': car.id}) }}">show</a>
+                    <a href="{{ path('app_car_edit', {'id': car.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(cars) }}
+    </div>
+
+    {% endif %}
+
+{% endblock %}
