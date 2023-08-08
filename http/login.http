@@ -1,0 +1,18 @@
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+POST http://localhost:8000/api/data_list
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTE1MDIzMjMsImV4cCI6MTY5MTUwNTkyMywicm9sZXMiOnsiMSI6IlJPTEVfQUREIiwiMiI6IlJPTEVfRURJVCIsIjMiOiJST0xFX0RFTEVURSIsIjAiOiJST0xFX0xJU1RfVklFVyJ9LCJ1c2VybmFtZSI6ImFkbWluIn0.PiuFCQSmyB-p8_H9lMfCnlcm1QSndN0P3iTogbKqb4q95I-2R0NZl7JrwB-gUISkGDXjK-Umz5_WK0vQeP8FqueclS7s38UmkZTkxQXcfkfA4RUrGgJi3ALNKkPEX-MaeYBqFqA3POh5uRhFluNoqldB01GEch_IzDLLHpIrjoyiLvxK-Cigr8TYCbGUxwxYUnMpJT5uNCa0Xuw0Am2h_rixRB90RZ1aGfK0FRuqCANa_MpV69yl11YJv8x-1vuxUf-gEOGXOyS9YiqwVb3obSQYogCUjGe7dzMaVOwOEuqbRo5jT8WKGj1SbaLjElOPQT_FmaJKRdO_0d1FNeNIOQ
+
+{
+  "sort": "c.name",
+  "direction": "asc",
+  "page": 1
+}

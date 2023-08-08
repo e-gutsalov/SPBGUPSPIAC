@@ -29,7 +29,8 @@ class CarType extends AbstractType
                 'html5' => false,
             ])
             ->add('image', FileType::class, [
-                'required' => false
+                'required' => false,
+                'data_class' => null
             ])
             ->add('documentation', FileType::class, [
                 'required' => false

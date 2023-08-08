@@ -22,11 +22,12 @@ class CarController extends AbstractController
         PaginatorInterface $paginator
     ): Response
     {
-        if ($this->getUser() === null) {
+        $user = $this->getUser();
+        if ($user === null) {
             return $this->redirectToRoute('app_login');
         }
 
-        if (in_array('ROLE_LIST_VIEW', $this->getUser()?->getRoles() ?? [])) {
+        if (in_array('ROLE_LIST_VIEW', $user?->getRoles() ?? [])) {
             $query = $carRepository->getCar();
             $pagination = $paginator->paginate(
                 $query,
@@ -34,6 +35,14 @@ class CarController extends AbstractController
                 20
             );
         }
+
+//        foreach ($pagination as $value) {
+//            if ($value->getImage()) {
+//                $f = fread($value->getImage(), 100000000);
+//                header('Content-type: image/jpeg');
+//                echo pg_unescape_bytea($f);
+//            }
+//        }
 
         return $this->render('car/index.html.twig', [
             'cars' => $pagination ?? null,
@@ -75,6 +84,13 @@ class CarController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['image']->getData();
+            $content = file_get_contents($file);
+            $content = pg_escape_bytea($content);
+//            $content = bin2hex($content);
+            $car->setImage($content);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_car_index', [], Response::HTTP_SEE_OTHER);

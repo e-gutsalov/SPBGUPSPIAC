@@ -22,12 +22,48 @@ class CarRepository extends ServiceEntityRepository
         parent::__construct($registry, Car::class);
     }
 
+    public function add(Car $entity, bool $flush = true): void
+    {
+        $this->_em->persist($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+    public function remove(Car $entity, bool $flush = true): void
+    {
+        $this->_em->remove($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     public function getCar(): Query
     {
         return
             $this->createQueryBuilder('c')
                 ->select()
                 ->getQuery();
+    }
+
+    public function getAllCar(array $data): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c.id, c.name')
+        ;
+
+        if (isset($data['sort'], $data['direction'])) {
+            $qb->orderBy($data['sort'], $data['direction']);
+        }
+
+        return $qb
+            ->getQuery()
+            ->getArrayResult();
     }
 
 //    /**

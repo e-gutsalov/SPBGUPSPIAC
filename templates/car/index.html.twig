@@ -13,7 +13,9 @@
             {{ knp_pagination_filter(cars, {
                 'c.id': 'Id',
                 'c.name': 'Name',
-                'c.description': 'Description'
+                'c.description': 'Description',
+                'c.horses': 'Horses',
+                'c.lVt': 'lVt'
             }) }}
         </div>
 
@@ -49,8 +51,12 @@
                 <td>{{ car.simple }}</td>
                 <td>{{ car.tree }}</td>
                 <td>
-                    <a href="{{ path('app_car_show', {'id': car.id}) }}">show</a>
-                    <a href="{{ path('app_car_edit', {'id': car.id}) }}">edit</a>
+                    {% if is_granted('ROLE_LIST_VIEW') %}
+                        <a href="{{ path('app_car_show', {'id': car.id}) }}">show</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_EDIT') %}
+                        <a href="{{ path('app_car_edit', {'id': car.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

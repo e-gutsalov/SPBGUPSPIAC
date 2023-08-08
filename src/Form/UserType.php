@@ -25,8 +25,6 @@ class UserType extends AbstractType
             $r[$role->getName()] = $role->getName();
         }
 
-        $user = new User();
-//        dump($builder->getData()->getRoles());exit();
         $builder
             ->add('login')
 //            ->add('roles', EntityType::class, [
